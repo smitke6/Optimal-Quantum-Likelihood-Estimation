@@ -1,12 +1,18 @@
+%% Background
+% This script implements the original version of QLE.
+% The configurable pieces are denoted by comments starting with CONFIGURE.
 clc;
 clearvars;
 
+%% Setup
+% Pauli matrices
 sigX = [0, 1; 1, 0];
 sigY = [0, -1i; 1i, 0];
 sigZ = [1, 0; 0, -1];
 sigX2 = 2 * sigX;
 sigZ2 = 2 * sigZ; 
 
+% Candidate Hamiltonians
 H1 = sigX+sigZ;
 H2 = 1.2 * [1, 0; 0, 0] - 0.8 * [0, 0; 0, 1];  
 H3 = 2*sigY+[1, 0; 0, 2];
@@ -14,21 +20,36 @@ H4 = 4*(1/sqrt(2)) * [1, 1; 1, -1];
 H5 = sigX+H4;
 H6= [1, 2; 2, -1];
 
-% Choose one of the following two sets of Hamiltonians
+%CONFIGURE: The user may compose any list of candidate Hamiltonians out of
+%the 2*2 matrices above, or use their own matrices. The paper studies the
+%following two lists.
 %H_list = {H1, H2, H3, H4, H5, H6};
 H_list = {sigX, sigX2, sigZ, sigZ2};
 
 N = length(H_list);
+
+%% Parameters
+% Here we use the optimal fixed values of the parameters 
+% theta, phi, alpha, beta. These were found by going
+% over a grid with resolution pi/12.
+
+% Measurement basis parameters
 theta = 0.7854;
 phi=6.2832;
- u1=[cos(theta/2); exp(1i*phi)*sin(theta/2)];%W gate
- u2 = [exp(-1i*phi)*sin(theta/2); -cos(theta/2)];
- W=[u1,u2];
+u1=[cos(theta/2); exp(1i*phi)*sin(theta/2)];%W gate
+u2 = [exp(-1i*phi)*sin(theta/2); -cos(theta/2)];
+W=[u1,u2];
+
 % Initial state parameters
 alpha = 1.2566;
 beta   = 0.5712;
 psi0   = [cos(alpha); exp(1i*beta)*sin(alpha)];
+
+%% Algorithm
+% CONFIGURE: The user may choose the convergence threshold
+threshold = 0.99;
 iter_arr=zeros(N,1);
+
 % Loop through Hamiltonians
 for idx = 1:N
     H_true = H_list{idx};
@@ -37,7 +58,7 @@ for idx = 1:N
 
     iter = 1;
     
-    while iter <= num_iterations+1 && max(weights) < 0.99
+    while iter <= num_iterations+1 && max(weights) < threshold
         % Determine evolution time
         t = PGH(H_list, weights);
 
@@ -87,7 +108,8 @@ for idx = 1:N
 end
 disp('results:')
 disp(iter_arr);
-% Helper functions
+
+%% Helper functions
 function t = PGH(H_list, weights)
     i1 = discrete_sample(weights);
     i2 = discrete_sample(weights);
@@ -106,4 +128,17 @@ end
 
 function outcome = sample_from_distribution(p)
     if rand() < p(1), outcome = 0; else, outcome = 1; end
+end
+
+% Min_Energy_Gap - Find the minimal energy gap in a given list of Hamiltonians
+%   INPUT:  list - a list of 2*2 Hermitian matrices
+%   OUTPUT: delta - the minimal energy gap
+function delta = Min_Energy_Gap(list)
+    N = length(list);
+    gap = zeros(N,1);
+    for i = 1:N
+        D = eig(list{i});
+        gap(i) = abs(D(2)-D(1));
+    end
+    delta = min(gap(gap>0));
 end
