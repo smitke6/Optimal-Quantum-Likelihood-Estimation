@@ -25,18 +25,21 @@ Convergence iterations (std):
 
 Optimized QLE with SA, threshold 0.9999, 20 runs:
 Convergence iterations (average):
-    
-Convergence iterations (std):
-    
+    1.1000    2.1000    2.8500    3.1000
 
-Original QLE, threshold 0.99, 10 runs:
-Convergence iterations (average):
-    
 Convergence iterations (std):
-    
+    0.3078    0.3078    0.5871    0.3078
 
-Original QLE, threshold 0.9999, 10 runs:
+Original QLE, threshold 0.99, 20 runs:
 Convergence iterations (average):
-    
+   18.1500   26.5000   33.3000   46.6000
+
 Convergence iterations (std):
-    
+    5.9848   13.8127   20.8203   13.3432   
+
+Original QLE, threshold 0.9999, 20 runs:
+Convergence iterations (average):
+   29.2500   45.6000   62.2000  108.9500
+
+Convergence iterations (std):
+   10.4674   13.1044   31.2673   27.6186
