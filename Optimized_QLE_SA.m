@@ -1,12 +1,21 @@
+%% Background
+% This script implements the optimized version of QLE developed in the
+% article "Optimal Quantum Likelihood Estimation". This version finds the
+% optimal parameters for each iteration using simulated annealing.
+% The configurable pieces are denoted by comments starting with CONFIGURE.
+
 clc;
 clearvars;
 
+%% Setup
+% Pauli matrices
 sigX = [0, 1; 1, 0];
 sigY = [0, -1i; 1i, 0];
 sigZ = [1, 0; 0, -1];
 sigX2 = 2 * sigX;
 sigZ2 = 2 * sigZ;
 
+% Candidate Hamiltonians
 H1 = sigX+sigZ;
 H2 = 1.2 * [1, 0; 0, 0] - 0.8 * [0, 0; 0, 1];  
 H3 = 2*sigY+[1, 0; 0, 2];
@@ -14,18 +23,19 @@ H4 = 4*(1/sqrt(2)) * [1, 1; 1, -1];
 H5 = sigX+H4;
 H6= [1, 2; 2, -1];
 
-H_list = {sigX, sigX2, sigZ, sigZ2};
-sigX  = [0, 1; 1, 0];
-sigZ  = [1, 0; 0, -1];
-sigX2 = 2 * sigX;
-sigZ2 = 2 * sigZ;
-
+%CONFIGURE: The user may compose any list of candidate Hamiltonians out of
+%the 2*2 matrices above, or use their own matrices. The paper studies the
+%following two lists.
+%H_list = {H1, H4, H3, H2, H5, H6};
 H_list = {sigX, sigX2, sigZ, sigZ2};
 N = length(H_list);
 
 convergence_iters = NaN(1, N);
 success_flags = false(1, N);
 
+%% Algorithm
+% CONFIGURE: The user may choose the convergence threshold.
+threshold = 0.99;
 for idx = 1:N
 	disp('******************************************************************')
 	disp('the right H is:'); disp(idx);
@@ -35,7 +45,7 @@ for idx = 1:N
 	
 	iter = 1;
 	while iter <= num_iterations+1
-		if max(weights) >= 0.9999
+		if max(weights) >= threshold
 			convergence_iters(idx) = iter;
 		break;
 		end
@@ -107,10 +117,10 @@ end
 	disp(['All correct: ', mat2str(all(success_flags))]);
 	
 	
-	% ========================= FUNCTIONS =========================
-	
+%% FUNCTIONS
+
+	% Simulated Annealing optimization
 	function best_params = optimize_entropy(weights, H_list)
-		% Simulated Annealing optimization
 		max_iters = 200;
 		T_init = 1.0;
 		alpha = 0.9;
@@ -216,4 +226,17 @@ end
 		else
 			outcome = 1;
 		end
+end
+
+% Min_Energy_Gap - Find the minimal energy gap in a given list of Hamiltonians
+%   INPUT:  list - a list of 2*2 Hermitian matrices
+%   OUTPUT: delta - the minimal energy gap
+function delta = Min_Energy_Gap(list)
+    N = length(list);
+    gap = zeros(N,1);
+    for i = 1:N
+        D = eig(list{i});
+        gap(i) = abs(D(2)-D(1));
+    end
+    delta = min(gap(gap>0));
 end
