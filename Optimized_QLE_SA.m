@@ -56,7 +56,7 @@ for idx = 1:N
 		phi   = best_params(3);
 		alpha = best_params(4);
 		beta  = best_params(5);
-		disp("idial t")
+		disp("ideal t")
 		disp(t);
 		
 		psi0 = [cos(alpha); exp(1i*beta)*sin(alpha)];
