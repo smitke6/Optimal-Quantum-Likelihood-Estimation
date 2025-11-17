@@ -75,7 +75,7 @@ for idx = 1:N
             psi_j = U_j * psi0;
             psi_all(:,j) = psi_j;
             pj = abs(u1' * psi_j)^2;
-            likelihoods(j) = (outcome==0)pj + (outcome==1)(1-pj);
+            likelihoods(j) = (outcome==0)*pj + (outcome==1)*(1-pj);
         end
 
         weights = weights .* likelihoods;
