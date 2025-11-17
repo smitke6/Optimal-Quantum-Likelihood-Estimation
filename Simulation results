@@ -14,7 +14,7 @@ Optimized QLE with SA, threshold 0.9999, 10 runs:
      Convergence iterations (std):
          0.4830    0.6992    0.9661    0.5676
 
-***************************************************
+*******************************************************************
 
 Optimized QLE with SA, threshold 0.99, 20 runs:
      Convergence iterations (average):
@@ -39,3 +39,11 @@ Original QLE, threshold 0.9999, 20 runs:
         29.2500   45.6000   62.2000  108.9500
      Convergence iterations (std):
         10.4674   13.1044   31.2673   27.6186
+
+*******************************************************************
+
+Optimized QLE, threshold 0.99, set of six Hamiltonian candidates:
+     Convergence iterations (average):
+         4.6000    4.0500    3.7500    4.5500    4.3000    3.8500
+     Convergence iterations (std):
+         0.7539    0.7592    0.7164    0.6863    0.8013    0.6708
