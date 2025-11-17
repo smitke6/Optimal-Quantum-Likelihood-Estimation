@@ -1,11 +1,42 @@
+Optimized QLE with grid search, threshold 0.99, 1 run:
+Convergence iterations:
+     2     2     3     2
+
 Optimized QLE with SA, threshold 0.99, 10 runs:
 Convergence iterations (average):
-    1.1000    2.2000    2.8000    3.0000
+    1.4000    2.0000    2.8000    3.0000
 Convergence iterations (std):
-    0.3162    0.4216    0.4216    0.4714
+    0.8433         0    0.6325         0
 
 Optimized QLE with SA, threshold 0.9999, 10 runs:
 Convergence iterations (average):
     1.3000    2.4000    2.6000    3.1000
 Convergence iterations (std):
     0.4830    0.6992    0.9661    0.5676
+
+***************************************************
+
+Optimized QLE with SA, threshold 0.99, 20 runs:
+Convergence iterations (average):
+    1.1500    2.0500    2.8500    2.9500
+
+Convergence iterations (std):
+    0.3663    0.2236    0.4894    0.2236
+
+Optimized QLE with SA, threshold 0.9999, 20 runs:
+Convergence iterations (average):
+    
+Convergence iterations (std):
+    
+
+Original QLE, threshold 0.99, 10 runs:
+Convergence iterations (average):
+    
+Convergence iterations (std):
+    
+
+Original QLE, threshold 0.9999, 10 runs:
+Convergence iterations (average):
+    
+Convergence iterations (std):
+    
