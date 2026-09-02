@@ -1,2 +1,2 @@
-This repository supplements the article "Optimal Quantum Likelihood Estimation" by Alon Levi, Ziv Ossi, Eliahu Cohen and Amit Te'eni.
+This repository supplements the article "Optimal Quantum Likelihood Estimation", [2026 Quantum Sci. Technol. 11 015029](https://www.doi.org/10.1088/2058-9565/ae2b31) by Alon Levi, Ziv Ossi, Eliahu Cohen and Amit Te'eni.
 The repository includes two MATLAB code files. One file includes a simulation of the original Quantum Likelihood Estimation (QLE) algorithm, and the other - a simulation of the optimized version of QLE developed in the article.
